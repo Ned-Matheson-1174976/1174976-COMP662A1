@@ -1,0 +1,83 @@
+COMP662 Assignment 1
+Final Classification Model Instructions
+
+Files Required
+--------------
+models/bean_classifier_rf_augmented.pkl
+models/bean_scaler.pkl
+
+Python Version
+--------------
+Python 3.12
+
+Required Packages
+-----------------
+pandas
+numpy
+scikit-learn
+joblib
+
+Example package versions:
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.1
+joblib==1.4.2
+
+Running the Model
+-----------------
+
+1. Place the CSV file containing new bean observations in the project directory.
+
+2. The CSV file must contain the following feature columns:
+
+Area
+Perimeter
+MajorAxisLength
+MinorAxisLength
+Eccentricity
+ConvexArea
+Extent
+Solidity
+roundness
+Compactness
+
+The CSV file should NOT contain the Class column.
+
+3. Load the model and generate predictions using the following code:
+
+import pandas as pd
+import joblib
+
+# Load model
+model = joblib.load("models/bean_classifier_rf_augmented.pkl")
+
+# Load input data
+X = pd.read_csv("new_beans.csv")
+
+# Generate predictions
+predictions = model.predict(X)
+
+# Save predictions
+pd.DataFrame({
+    "Class": predictions
+}).to_csv("predictions.csv", index=False)
+
+Output
+------
+
+The model generates a file named:
+
+predictions.csv
+
+containing a single column:
+
+Class
+
+where each row contains the predicted bean category (0, 1, 2, 3, or 4).
+
+Notes
+-----
+
+The final submitted model is an augmented Random Forest classifier trained using both the original training dataset and synthetic data generated with a Conditional Variational Autoencoder (CVAE).
+
+The model does not require feature scaling during prediction because the Random Forest classifier was trained using the original feature values.
